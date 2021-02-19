@@ -1,0 +1,38 @@
+Table expressions
+    Examples
+        Select data from prebuilt tables
+            WITH
+                step_correct_answers AS (
+                    SELECT
+                        step.step_name,
+                        SUM(IF(step_student.result IS NULL OR step_student.result <> 'correct', 0, 1)) AS count
+                    FROM
+                        step
+                            INNER JOIN step_student USING(step_id)
+                    GROUP BY
+                        step.step_name
+                ),
+                step_wrong_answers AS (
+                    SELECT
+                        step.step_name,
+                        SUM(IF(step_student.result IS NULL OR step_student.result <> 'wrong', 0, 1)) AS count
+                    FROM
+                        step
+                            INNER JOIN step_student USING(step_id)
+                    GROUP BY
+                        step.step_name
+                )
+            SELECT
+                step_correct_answers.step_name AS Шаг,
+                IF(
+                    step_correct_answers.count = 0 AND step_wrong_answers.count = 0,
+                    100,
+                    ROUND(step_correct_answers.count / (step_correct_answers.count + step_wrong_answers.count) * 100)
+                ) AS Успешность
+            FROM
+                step_correct_answers
+                    INNER JOIN step_wrong_answers USING(step_name)
+            ORDER BY
+                Успешность,
+                Шаг;
+

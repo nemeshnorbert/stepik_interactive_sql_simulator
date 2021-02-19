@@ -1,0 +1,60 @@
+Data selection
+    Examples
+        Select all data from the table
+            SELECT
+                *
+            FROM
+                book;
+
+        Select specific columns from the table
+            SELECT
+                author,
+                title,
+                price
+            FROM
+                book;
+
+        Select specific columns from the table and give them aliases
+            SELECT
+                title AS Название,
+                author AS Автор
+            FROM
+                book;
+
+        Select specific columns and compute additional quantities
+            SELECT
+                title,
+                amount,
+                amount * 1.65 AS pack
+            FROM
+                book;
+
+        Select specific columns and compute quantities via builtin math functions
+            SELECT
+                title,
+                author,
+                amount,
+                ROUND(price * 0.7, 2) AS new_price
+            FROM
+                book;
+
+        Select specific columns and compute quantities via builtin logical functions
+            SELECT
+                author,
+                title,
+                ROUND(IF(author='Булгаков М.А.', 1.1, IF(author='Есенин С.А.', 1.05, 1)) * price, 2) AS new_price
+            FROM
+                book;
+
+        Select data with case statement
+            SELECT
+                student_category.category AS Группа,
+                CASE
+                    WHEN student_category.category = 'I' THEN 'от 0 до 10'
+                    WHEN student_category.category = 'II' THEN 'от 11 до 15'
+                    WHEN student_category.category = 'III' THEN 'от 16 до 27'
+                    ELSE 'больше 27'
+                END AS Интервал,
+                COUNT(*) AS Количество
+            FROM
+                student_category

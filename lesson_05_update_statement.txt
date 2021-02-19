@@ -1,0 +1,47 @@
+Table updates
+    Examples
+        Simple updates of tuples in a table
+            UPDATE
+                book
+            SET
+                price = 0.9 * price
+            WHERE
+                amount IN (5, 10);
+
+        Simple updates of multiple columns
+            UPDATE
+                book
+            SET
+                buy = IF(buy > amount, amount, buy),
+                price = IF(buy = 0, ROUND(price * 0.9, 2), price);
+
+        Updates of multiple tables
+            UPDATE
+                book,
+                supply
+            SET
+                book.amount = book.amount + supply.amount,
+                book.price = (book.price + supply.price) / 2,
+                supply.price = (book.price + supply.price) / 2
+            WHERE
+                book.title = supply.title AND book.author = supply.author;
+
+        Update multiple tables using join
+            UPDATE
+                book
+                    INNER JOIN author ON book.author_id = author.author_id
+                    INNER JOIN supply ON supply.title = book.title AND supply.author = author.name_author
+            SET
+                book.amount = book.amount + supply.amount,
+                supply.amount = 0,
+                book.price = (book.amount * book.price + supply.amount * supply.price) / (book.amount + supply.amount)
+            WHERE
+                book.price != supply.price
+
+        Update table using subqueries
+            UPDATE book
+            SET
+                genre_id = (SELECT genre.genre_id FROM genre WHERE genre.name_genre = 'Поэзия')
+            WHERE
+                book.title = 'Стихотворения и поэмы';
+

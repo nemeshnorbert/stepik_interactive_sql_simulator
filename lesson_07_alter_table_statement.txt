@@ -1,0 +1,19 @@
+Table srtucture modification
+    Example
+        Add new column str_id as the last column in the table
+            ALTER TABLE
+                applicant_order
+            ADD
+                str_id INT;
+
+        Add new column str_id as the first column in the table
+            ALTER TABLE
+                applicant_order
+            ADD
+                str_id INT FIRST;
+
+        Add new column str_id after the column program_id
+            ALTER TABLE
+                applicant_order
+            ADD
+                str_id INT AFTER program_id;

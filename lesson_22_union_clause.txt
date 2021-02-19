@@ -1,0 +1,64 @@
+Concatenate results of two queries
+    Examples
+        Concatenate results of two queries with deletion of duplicates
+            SELECT
+                YEAR(buy_archive.date_payment) AS Год,
+                MONTHNAME(buy_archive.date_payment) AS Месяц,
+                SUM(buy_archive.amount * buy_archive.price) AS Сумма
+            FROM
+                buy_archive
+            GROUP BY
+                Год,
+                Месяц
+
+            UNION
+
+            SELECT
+                YEAR(buy_step.date_step_end) AS Год,
+                MONTHNAME(buy_step.date_step_end) AS Месяц,
+                SUM(buy_book.amount * book.price) AS Сумма
+            FROM
+                buy_step
+                    INNER JOIN step USING(step_id)
+                    INNER JOIN buy_book USING(buy_id)
+                    INNER JOIN book USING(book_id)
+            WHERE
+                buy_step.date_step_end IS NOT Null AND
+                step.name_step = "Оплата"
+            GROUP BY
+                Год,
+                Месяц
+            ORDER BY
+                Месяц, Год;
+
+        Concatenate results of two queries without deletion of duplicates
+            SELECT
+                report.title,
+                SUM(report.count) AS Количество,
+                SUM(report.count * report.price) AS Сумма
+            FROM (
+                SELECT
+                    book.title,
+                    buy_archive.amount AS count,
+                    buy_archive.price AS price
+                FROM
+                    buy_archive INNER JOIN book USING(book_id)
+                UNION ALL
+                SELECT
+                    book.title,
+                    buy_book.amount AS count,
+                    book.price AS price
+                FROM
+                    buy_step
+                        INNER JOIN step USING(step_id)
+                        INNER JOIN buy_book USING(buy_id)
+                        INNER JOIN book USING(book_id)
+                WHERE
+                    buy_step.date_step_end IS NOT Null AND
+                    step.name_step = "Оплата"
+            ) AS report
+            GROUP BY
+                title
+            ORDER BY
+                Сумма DESC;
+

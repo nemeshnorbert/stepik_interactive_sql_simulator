@@ -1,0 +1,66 @@
+Subqueries
+    Examples
+        Subqueries with unique return value
+            SELECT
+                author,
+                title,
+                price
+            FROM
+                book
+            WHERE
+                price <= (SELECT AVG(price) FROM book)
+            ORDER BY
+                price DESC;
+
+        Subqueries as a part of the expression
+            SELECT
+                author,
+                title,
+                price
+            FROM
+                book
+            WHERE
+                price - (SELECT MIN(price) FROM book) <= 150
+            ORDER BY
+                price;
+
+        Subqueries and IN operator
+            SELECT
+                author,
+                title,
+                price
+            FROM
+                book
+            WHERE
+                price - (SELECT MIN(price) FROM book) <= 150
+            ORDER BY
+                price;
+
+        Subqueries with operators ALL and ANY
+            SELECT
+                author,
+                title,
+                price
+            FROM
+                book
+            WHERE
+                price < ANY(
+                    SELECT
+                        MIN(price)
+                    FROM
+                        book
+                    GROUP BY
+                        author
+                );
+
+        Subquery as expression in SELECT clause
+            SELECT
+                title,
+                author,
+                amount,
+                (SELECT MAX(amount) FROM book) - amount AS Заказ
+            FROM
+                book
+            WHERE
+                amount != (SELECT MAX(amount) FROM book);
+

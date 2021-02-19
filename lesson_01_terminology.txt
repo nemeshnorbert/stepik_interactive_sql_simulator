@@ -1,0 +1,14 @@
+Terminology
+    Entry - any piece of data, e.g. string, number, decimal
+    Tuple - an ordered sequence of entries; aka row
+    Attribute - name of the entry in a tuple, e.g. second entry in the tuple (2, 'April')) has name 'month'; aka column
+    Relation - a set of tuples; aka table
+    Cardinality - number of tuples in a relation; aka table size
+    Dimension - number of attributes in a table; aka table width
+    Attribute domain - set of all valid values of attribute
+
+    Key - set of attributes that uniquely identify a tuple in a relation
+    Primary key - a key voluntarily chosen among all possible keys of the relation
+    Foreign key - set of attributes in a table which are a primary key in another table
+    Foreign relation - relation that a foreign key references to; aka foreign table
+

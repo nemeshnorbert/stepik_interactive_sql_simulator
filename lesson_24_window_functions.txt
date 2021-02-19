@@ -1,0 +1,74 @@
+Window functions all to perform advanced data aggregation
+When using window functions one query executed as follows
+    Step 1. Execute all clauses of the query, except ORDER BY and LIMIT and window functions themselves
+    Step 2. Execture window functions
+
+Window function clause syntax:
+    <WINDOW_FUNCTION>(<EXPRESSION>) OVER (
+        PARTITION_BY <COLUMN_A>, <COLUMN_B>, ...
+        ORDER BY <COLUMN_X>, <COLUMN_Y>, ...
+        ROWS BETWEEN <RANGE_BEGIN> AND <RANGE_END>
+    )
+
+The symantics of the window function is as follows
+    Pick data D from step 1. Note: for each row r in D the value of <EXPRESSION> must be already available
+    Group this data into partitions by <COLUMN_A>, <COLUMN_B>, ...
+    For each partition p in partitions
+        Order rows in p by <COLUMN_X>, <COLUMN_Y>, ...
+        For each row r in p
+            set up window w from <RANGE_BEGIN> to <RANGE_END> around r
+            yield result of <WINDOW_FUNCTION> applied to the window of w of partition p at row r
+
+Examples of window functions
+    ROW_NUMBER() for each row return its position within partition
+    RANK()       for each row return 1 + number of rows with ORDER BY key strictly less than the current row
+    DENSE_RANK() for each row return 1 + number of OREDER BY keys strictly less than the current row
+    LAG()        for each row return either previous row or NULL
+    LEAD()       for each row return either next row or NULL
+
+Any aggragte function can be a window function. It just computes its value based on the whole partition
+and does not take into account the window and the row
+
+Examples
+    Select using LAG window function
+        SELECT
+            student_name,
+            COUNT(DISTINCT step_id) AS Количество,
+            LAG(COUNT(DISTINCT step_id)) OVER (ORDER BY COUNT(DISTINCT step_id) DESC)
+
+        FROM
+            student
+                INNER JOIN step_student USING(student_id)
+        WHERE
+            result = "correct"
+        GROUP BY
+            student_name;
+
+    Select using LAG window function with named window
+        WITH
+            get_rate_lesson(mod_id, stud, rate) AS (
+                SELECT
+                    module_id,
+                    student_name,
+                    COUNT(DISTINCT step_id)
+                FROM
+                    student
+                        INNER JOIN step_student USING(student_id)
+                        INNER JOIN step USING (step_id)
+                        INNER JOIN lesson USING (lesson_id)
+                WHERE
+                    result = "correct"
+                GROUP BY
+                    module_id,
+                    student_name
+        )
+        SELECT
+            mod_id AS Модуль,
+            stud AS Студент,
+            rate AS Райтинг,
+            ROW_NUMBER() OVER module_history AS Номер,
+            RANK() OVER module_history AS Ранг,
+            DENSE_RANK() OVER module_history AS Рейтинг
+        ROM
+            get_rate_lesson
+        WINDOW module_history AS (PARTITION BY mod_id ORDER BY  rate DESC)

@@ -1,0 +1,9 @@
+Table destruction
+    Examples
+        Destroy table
+            DROP TABLE
+                book
+
+        Destroy multiple tables
+            DROP TABLE
+                book, author

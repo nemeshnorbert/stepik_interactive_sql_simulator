@@ -1,0 +1,140 @@
+Select data from multiple tables
+    Examples
+        Select data from two tables, join tuples with equal value in genre_id column
+            SELECT
+                book.title,
+                genre.name_genre,
+                book.price
+            FROM
+                book
+                    INNER JOIN genre ON book.genre_id = genre.genre_id
+            WHERE
+                book.amount > 8
+            ORDER BY
+                book.price DESC;
+
+        Select data from two tables, for each tuple from the first table either join tuples from
+        the second table with the same genre_id or join null
+            SELECT
+                genre.name_genre
+            FROM
+                genre
+                    LEFT JOIN book ON genre.genre_id = book.genre_id
+            WHERE
+                book.book_id IS NULL;
+
+        Select all possible pairs of tuples from two tables
+            SELECT
+                city.name_city,
+                author.name_author,
+                DATE_ADD('2020-01-01', INTERVAL FLOOR(RAND() * 365) DAY) AS Дата
+            FROM
+                city
+                    CROSS JOIN author
+            ORDER BY
+                city.name_city,
+                Дата DESC;
+
+        Select data from more than two tables
+            SELECT
+                genre.name_genre,
+                book.title,
+                author.name_author
+            FROM
+                genre
+                    INNER JOIN book ON genre.genre_id = book.genre_id
+                    INNER JOIN author ON book.author_id = author.author_id
+            WHERE
+                genre.name_genre LIKE '%роман%'
+            ORDER BY
+                title;
+
+        Select data from more than two tables with groupping
+            SELECT
+                author.name_author,
+                SUM(amount) AS Количество
+            FROM
+                author
+                    LEFT JOIN book ON author.author_id = book.author_id
+            GROUP BY
+                author.name_author
+            HAVING
+                Количество < 10 OR Количество IS NULL
+            ORDER BY
+                Количество;
+
+        Select data from multiple tables using squbqueries
+            SELECT
+                name_author,
+                SUM(amount) as Количество
+            FROM
+                author
+                    INNER JOIN book ON author.author_id = book.author_id
+            GROUP BY
+                name_author
+            HAVING
+                SUM(amount) = (
+                    SELECT
+                        MAX(sum_amount) AS max_sum_amount
+                    FROM
+                        (
+                            SELECT
+                                author_id,
+                                SUM(amount) AS sum_amount
+                            FROM
+                                book
+                            GROUP BY
+                                author_id
+                        ) AS query_in
+                );
+
+        Select data from table joined with subqueries
+            SELECT
+                book.title,
+                author.name_author,
+                genre.name_genre,
+                book.price,
+                book.amount
+            FROM
+                (
+                    SELECT
+                        book.genre_id,
+                        SUM(book.amount) as total
+                    FROM
+                        book
+                    GROUP BY
+                        book.genre_id
+                ) AS genre_popularity
+                INNER JOIN
+                (
+                    SELECT
+                        book.genre_id,
+                        SUM(book.amount) AS total
+                    FROM
+                        book
+                    GROUP BY
+                        book.genre_id
+                    ORDER BY
+                        total DESC
+                    LIMIT 1
+                ) AS popular_genre
+                ON genre_popularity.total = popular_genre.total
+                INNER JOIN book
+                ON genre_popularity.genre_id = book.genre_id
+                INNER JOIN author
+                ON book.author_id = author.author_id
+                INNER JOIN genre
+                ON book.genre_id = genre.genre_id
+            ORDER BY
+                book.title;
+
+        Select data from multiple table with USING clause
+            SELECT
+                book.title AS Название,
+                author.name_author AS Автор,
+                book.amount + supply.amount AS Количество
+            FROM
+                book
+                    INNER JOIN author USING(author_id)
+                    INNER JOIN supply USING(title, price);
+

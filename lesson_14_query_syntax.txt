@@ -1,0 +1,9 @@
+Query syntax
+    Typical data retrieval query syntax
+        SELECT (columns to select; required)
+        FROM (tables to select from; required)
+        WHERE (conditions and filtration; optional)
+        GROUP BY (columns to group our data by; optional)
+        HAVING (conditions and filtration over groupped data; optional)
+        ORDER BY (columns to sort by before giving the final result; optional)
+

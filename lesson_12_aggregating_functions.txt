@@ -1,0 +1,18 @@
+Aggregating functions
+    Function                | Description                               | Example
+    -----------------------------------------------------------------------------------------------------
+    DISTINCT values         | Select unique entries from values         | DISTINCT author
+    -----------------------------------------------------------------------------------------------------
+    COUNT(values)           | Count non-NULL entries in values          | COUNT(user)
+    -----------------------------------------------------------------------------------------------------
+    SUM(values)             | Return sum all non-NULL entries in values | SUM(price * amount)
+    -----------------------------------------------------------------------------------------------------
+    MIN(values)             | Return minimum of all non-NULL entries    | MIN(price)
+                            | in values                                 |
+    -----------------------------------------------------------------------------------------------------
+    MAX(values)             | Return maximum of all non-NULL entries    | MAX(price)
+                            | in values                                 |
+    -----------------------------------------------------------------------------------------------------
+    AVG(values)             | Return average of all non-NULL entries    | AVG(price)
+                            | in values                                 |
+

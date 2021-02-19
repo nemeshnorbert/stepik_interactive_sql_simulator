@@ -1,0 +1,36 @@
+Table data modifications
+    Example
+        Delete all tuples from the table
+            DELETE FROM
+                supply
+
+        Deletion of some tuples from the table
+            DELETE FROM
+                supply
+            WHERE
+                author IN (SELECT author FROM book GROUP BY author HAVING sum(amount) > 10);
+
+        Deletion of some tuples from the table using subqueries
+            DELETE FROM
+                author
+            WHERE
+                author_id IN (
+                    SELECT
+                        author_id
+                    FROM
+                        book
+                    GROUP BY
+                        author_id
+                    HAVING
+                        SUM(amount) < 20);
+
+        Deletion of some tuples from the table using joins
+            DELETE FROM
+                author
+            USING
+                author
+                    INNER JOIN book ON author.author_id = book.author_id
+                    INNER JOIN genre ON genre.genre_id = book.genre_id
+            WHERE
+                genre.name_genre = 'Поэзия';
+

@@ -1,0 +1,41 @@
+Table insertions
+    Examples
+        Insert single tuple
+            INSERT INTO
+                book (title, author, price, amount)
+            VALUES
+                ('Мастер и Маргарита', 'Булгаков М.А.', 670.99, 3);
+
+        Insert multiple tuples
+            INSERT INTO
+                book(title, author, price, amount)
+            VALUES
+                ('Белая гвардия', 'Булгаков М.А.', 540.50, 5),
+                ('Идиот', 'Достоевский Ф.М.', 460.00, 10),
+                ('Братья Карамазовы', 'Достоевский Ф.М.', 799.01, 2);
+
+        Insert values from other tables
+            INSERT INTO
+                book(title, author, price, amount)
+            SELECT
+                title,
+                author,
+                price,
+                amount
+            FROM
+                supply
+            WHERE
+                author NOT IN ('Булгаков М.А.', 'Достоевский Ф.М.');
+
+        Insert into table using joins
+            INSERT INTO
+                author(name_author)
+            SELECT
+                supply.author
+            FROM
+                supply
+                    LEFT JOIN author ON supply.author = author.name_author
+            WHERE
+                author.name_author IS NULL;
+
+

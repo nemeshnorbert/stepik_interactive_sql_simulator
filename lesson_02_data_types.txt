@@ -1,0 +1,22 @@
+Basic data types
+    Data type          | Valid values                         | Examples
+    -----------------------------------------------------------------------
+    INT, INTEGER       | All integers from                    | -567
+                       | -2 147 483 648 to 2 147 483 647      | 1205
+    -----------------------------------------------------------------------
+    DECIMAL, NUMERIC   | All real numbers from                | 34.6
+                       | -1e+38 + 1 to 1e+38 - 1              | -3.294
+                       | One can specify number of decimals   |
+                       | before and after floating point      |
+                       | E.g.                                 |
+                       | DECIMAL(4, 1)                        |
+                       | NUMERIC(6, 3)                        |
+    -----------------------------------------------------------------------
+    DATE               | Date in the format YYYY-MM-DD        | 2020-07-26
+    -----------------------------------------------------------------------
+    VARCHAR            | A string of length at most 255       | "Heeeeyy!"
+                       | You can specify maximal length of    |
+                       | stored string, e.g. VARCHAR(10)      |
+
+    NULL is not a data type. It is a sentinel that denotes absense of value
+

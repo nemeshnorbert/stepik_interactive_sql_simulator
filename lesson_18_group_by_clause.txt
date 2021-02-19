@@ -1,0 +1,57 @@
+Data groupping and aggregation
+    Examples
+        Select data, group it by column and aggregate
+            SELECT
+                author AS Автор,
+            FROM
+                book
+            GROUP BY
+                author;
+
+        Select unique values from the column
+            SELECT
+                author,
+                DISTINCT title
+            FROM
+                book
+            GROUP BY
+                author;
+
+        Select data, find sum and count for each group
+            SELECT
+                author AS Автор,
+                COUNT(*) AS Различных_книг,
+                SUM(amount) AS Количество_экземпляров
+            FROM
+                book
+            GROUP BY
+                author;
+
+        Select data, find min, max and average for each group
+            SELECT
+                author,
+                MIN(price) AS Минимальная_цена,
+                MAX(price) AS Максимальная_цена,
+                AVG(price) AS Средняя_цена
+            FROM
+                book
+            GROUP BY
+                author;
+
+        Aggregate data from the whole table
+            SELECT
+                MIN(price) AS Минимальная_цена,
+                MAX(price) AS Максимальная_цена,
+                ROUND(AVG(price), 2) AS Средняя_цена
+            FROM
+                book;
+
+        Aggregate filtered data
+            SELECT
+                ROUND(AVG(price), 2) AS Средняя_цена,
+                ROUND(SUM(price * amount), 2) AS Стоимость
+            FROM
+                book
+            WHERE
+                amount BETWEEN 5 AND 14;
+    Examples
