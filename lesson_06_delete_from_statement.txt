@@ -8,21 +8,21 @@ Table data modifications
             DELETE FROM
                 supply
             WHERE
-                author = 'Ф. М. Достоевский';
+                supply.author = 'Ф. М. Достоевский';
 
         Deletion of some tuples from the table using subqueries
             DELETE FROM
                 author
             WHERE
-                author_id IN (
+                author.author_id IN (
                     SELECT
-                        author_id
+                        book.author_id
                     FROM
                         book
                     GROUP BY
-                        author_id
+                        book.author_id
                     HAVING
-                        SUM(amount) < 20);
+                        SUM(book.amount) < 20);
 
         Deletion of some tuples from the table using joins
             DELETE FROM
