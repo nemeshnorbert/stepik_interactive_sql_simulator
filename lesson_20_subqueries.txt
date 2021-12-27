@@ -2,65 +2,65 @@ Subqueries
     Examples
         Subqueries with unique return value
             SELECT
-                author,
-                title,
-                price
+                book.author,
+                book.title,
+                book.price
             FROM
                 book
             WHERE
-                price <= (SELECT AVG(price) FROM book)
+                book.price <= (SELECT AVG(book.price) FROM book)
             ORDER BY
-                price DESC;
+                book.price DESC;
 
         Subqueries as a part of the expression
             SELECT
-                author,
-                title,
-                price
+                book.author,
+                book.title,
+                book.price
             FROM
                 book
             WHERE
-                price - (SELECT MIN(price) FROM book) <= 150
+                book.price - (SELECT MIN(book.price) FROM book) <= 150
             ORDER BY
                 price;
 
         Subqueries and IN operator
             SELECT
-                author,
-                title,
-                price
+                book.author,
+                book.title,
+                book.price
             FROM
                 book
             WHERE
-                price - (SELECT MIN(price) FROM book) <= 150
+                price - (SELECT MIN(book.price) FROM book) <= 150
             ORDER BY
-                price;
+                book.price;
 
         Subqueries with operators ALL and ANY
             SELECT
-                author,
-                title,
-                price
+                book.author,
+                book.title,
+                book.price
             FROM
                 book
             WHERE
-                price < ANY(
+                book.price < ANY(
                     SELECT
-                        MIN(price)
+                        MIN(book.price)
                     FROM
                         book
                     GROUP BY
-                        author
+                        book.author
                 );
 
         Subquery as expression in SELECT clause
             SELECT
-                title,
-                author,
-                amount,
-                (SELECT MAX(amount) FROM book) - amount AS Заказ
+                book.title,
+                book.author,
+                book.amount,
+                (SELECT MAX(book.amount) FROM book) - amount AS Order
             FROM
                 book
             WHERE
-                amount != (SELECT MAX(amount) FROM book);
+                book.amount != (SELECT MAX(book.amount) FROM book);
 
