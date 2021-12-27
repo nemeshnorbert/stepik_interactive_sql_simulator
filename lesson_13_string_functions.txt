@@ -6,12 +6,12 @@ String functions
     CONCAT(str1, str2)         | Concatenate str1 and str2                 | CONCAT("ab", "cd") = "abcd"
     ------------------------------------------------------------------------------------------------------------------------
     text LIKE pattern          | Return true only if text                  | name LIKE '%а'
-                                | matches the pattern                       |
-                                | Note:                                     |
-                                | % matches any sequence of symbols         |
-                                | even empty                                |
-                                | _ matches any single symbol               |
+                               | matches the pattern                       |
+                               | Note:                                     |
+                               | % matches any sequence of symbols         |
+                               | even empty                                |
+                               | _ matches any single symbol               |
     ------------------------------------------------------------------------------------------------------------------------
     REGEXP_LIKE(text, pattern) | Return true only if text                  | REGEXP_LIKE(name, CONCAT('\\b', keyword)) = 1
-                                | matches the pattern                       |
+                               | matches the pattern                       |
 
