@@ -2,15 +2,15 @@ Filtration of aggregated data
     Examples
         Filter aggregated data
             SELECT
-                author,
-                SUM(price * amount) AS Стоимость
+                book.author,
+                SUM(book.price * book.amount) AS Cost
             FROM
                 book
             WHERE
-                title NOT IN ('Идиот', 'Белая гвардия')
+                book.title NOT IN ('Идиот', 'Белая гвардия')
             GROUP BY
-                author
+                book.author
             HAVING
-                SUM(price * amount) > 5000
-            ORDER BY Стоимость DESC;
+                SUM(book.price * book.amount) > 5000
+            ORDER BY Cost DESC;
 
