@@ -4,16 +4,16 @@ Table updates
             UPDATE
                 book
             SET
-                price = 0.9 * price
+                book.price = 0.9 * book.price
             WHERE
-                amount IN (5, 10);
+                book.amount IN (5, 10);
 
         Simple updates of multiple columns
             UPDATE
                 book
             SET
-                buy = IF(buy > amount, amount, buy),
-                price = IF(buy = 0, ROUND(price * 0.9, 2), price);
+                book.buy = IF(book.buy > book.amount, book.amount, book.buy),
+                book.price = IF(book.buy = 0, ROUND(book.price * 0.9, 2), book.price);
 
         Updates of multiple tables
             UPDATE
@@ -39,9 +39,10 @@ Table updates
                 book.price != supply.price
 
         Update table using subqueries
-            UPDATE book
+            UPDATE 
+                book
             SET
-                genre_id = (SELECT genre.genre_id FROM genre WHERE genre.name_genre = 'Поэзия')
+                book.genre_id = (SELECT genre.genre_id FROM genre WHERE genre.name_genre = 'Поэзия')
             WHERE
                 book.title = 'Стихотворения и поэмы';
 
