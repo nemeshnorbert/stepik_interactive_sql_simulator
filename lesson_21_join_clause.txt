@@ -27,13 +27,13 @@ Select data from multiple tables
             SELECT
                 city.name_city,
                 author.name_author,
-                DATE_ADD('2020-01-01', INTERVAL FLOOR(RAND() * 365) DAY) AS Дата
+                DATE_ADD('2020-01-01', INTERVAL FLOOR(RAND() * 365) DAY) AS Date
             FROM
                 city
                     CROSS JOIN author
             ORDER BY
                 city.name_city,
-                Дата DESC;
+                Date DESC;
 
         Select data from more than two tables
             SELECT
@@ -47,44 +47,44 @@ Select data from multiple tables
             WHERE
                 genre.name_genre LIKE '%роман%'
             ORDER BY
-                title;
+                book.title;
 
         Select data from more than two tables with groupping
             SELECT
                 author.name_author,
-                SUM(amount) AS Количество
+                SUM(book.amount) AS Amount
             FROM
                 author
                     LEFT JOIN book ON author.author_id = book.author_id
             GROUP BY
                 author.name_author
             HAVING
-                Количество < 10 OR Количество IS NULL
+                Amount < 10 OR Amount IS NULL
             ORDER BY
-                Количество;
+                Amount;
 
-        Select data from multiple tables using squbqueries
+        Select data from multiple tables using subqueries
             SELECT
-                name_author,
-                SUM(amount) as Количество
+                author.name_author,
+                SUM(book.amount) as Amount
             FROM
                 author
                     INNER JOIN book ON author.author_id = book.author_id
             GROUP BY
-                name_author
+                author.name_author
             HAVING
-                SUM(amount) = (
+                SUM(book.amount) = (
                     SELECT
-                        MAX(sum_amount) AS max_sum_amount
+                        MAX(query_in.sum_amount) AS max_sum_amount
                     FROM
                         (
                             SELECT
-                                author_id,
-                                SUM(amount) AS sum_amount
+                                book.author_id,
+                                SUM(book.amount) AS sum_amount
                             FROM
                                 book
                             GROUP BY
-                                author_id
+                                book.author_id
                         ) AS query_in
                 );
 
