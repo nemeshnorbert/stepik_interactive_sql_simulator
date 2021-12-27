@@ -2,39 +2,39 @@ Data filtration
     Examples
         Select data with filtration
             SELECT
-                author,
-                title,
-                price
+                book.author,
+                book.title,
+                book.price
             FROM
                 book
             WHERE
-                amount < 10;
+                book.amount < 10;
 
         Select data with filtration using logical operators
             SELECT
-                title,
-                author,
-                price,
-                amount
+                book.title,
+                book.author,
+                book.price,
+                book.amount
             FROM
                 book
             WHERE
-                price * amount >= 5000 AND (price < 500 OR price > 600);
+                book.price * book.amount >= 5000 AND (book.price < 500 OR book.price > 600);
 
         Select data with filtration using BETWEEN and IN operators
             SELECT
-                title,
-                author
+                book.title,
+                book.author
             FROM
                 book
-            WHERE (price BETWEEN 540.50 AND 800) AND (amount IN (2, 3, 5, 7));
+            WHERE (book.price BETWEEN 540.50 AND 800) AND (book.amount IN (2, 3, 5, 7));
 
         Select data with filtration using LIKE operators
             SELECT
-                title,
-                author
+                book.title,
+                book.author
             FROM
                 book
             WHERE
-                author LIKE '_% %С.%' AND title LIKE '_% _%';
+                book.author LIKE '_% %С.%' AND book.title LIKE '_% _%';
 
