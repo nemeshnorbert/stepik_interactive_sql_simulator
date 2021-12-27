@@ -37,5 +37,5 @@ Logical fucntions and operators
     value IS NULL                             | Return true if value is NULL              | name IS NULL
     ---------------------------------------------------------------------------------------------------------------------------------
     IFNULL(expr, value)                       | Return expr if it is not NULL, otherwise  | IFNULL(name, 'Unknown')
-                                                | return value                              |
+                                              | return value                              |
 
