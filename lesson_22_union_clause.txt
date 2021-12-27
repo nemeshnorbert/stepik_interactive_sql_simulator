@@ -2,21 +2,21 @@ Concatenate results of two queries
     Examples
         Concatenate results of two queries with deletion of duplicates
             SELECT
-                YEAR(buy_archive.date_payment) AS Год,
-                MONTHNAME(buy_archive.date_payment) AS Месяц,
-                SUM(buy_archive.amount * buy_archive.price) AS Сумма
+                YEAR(buy_archive.date_payment) AS Year,
+                MONTHNAME(buy_archive.date_payment) AS Month,
+                SUM(buy_archive.amount * buy_archive.price) AS Total
             FROM
                 buy_archive
             GROUP BY
-                Год,
-                Месяц
+                Year,
+                Month
 
             UNION
 
             SELECT
-                YEAR(buy_step.date_step_end) AS Год,
-                MONTHNAME(buy_step.date_step_end) AS Месяц,
-                SUM(buy_book.amount * book.price) AS Сумма
+                YEAR(buy_step.date_step_end) AS Year,
+                MONTHNAME(buy_step.date_step_end) AS Month,
+                SUM(buy_book.amount * book.price) AS Total
             FROM
                 buy_step
                     INNER JOIN step USING(step_id)
@@ -26,16 +26,16 @@ Concatenate results of two queries
                 buy_step.date_step_end IS NOT Null AND
                 step.name_step = "Оплата"
             GROUP BY
-                Год,
-                Месяц
+                Year,
+                Month
             ORDER BY
-                Месяц, Год;
+                Month, Year;
 
         Concatenate results of two queries without deletion of duplicates
             SELECT
                 report.title,
-                SUM(report.count) AS Количество,
-                SUM(report.count * report.price) AS Сумма
+                SUM(report.count) AS Count,
+                SUM(report.count * report.price) AS Total
             FROM (
                 SELECT
                     book.title,
@@ -58,7 +58,6 @@ Concatenate results of two queries
                     step.name_step = "Оплата"
             ) AS report
             GROUP BY
-                title
+                report.title
             ORDER BY
-                Сумма DESC;
-
+                Total DESC;
