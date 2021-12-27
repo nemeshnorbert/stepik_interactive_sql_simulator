@@ -1,6 +1,6 @@
-Window functions all to perform advanced data aggregation
-When using window functions one query executed as follows
-    Step 1. Execute all clauses of the query, except ORDER BY and LIMIT and window functions themselves
+Window functions needed to perform advanced data aggregation
+When using window functions a query executed as follows
+    Step 1. Execute all clauses of the query, except ORDER BY, LIMIT and window functions
     Step 2. Execture window functions
 
 Window function clause syntax:
@@ -17,7 +17,7 @@ The symantics of the window function is as follows
         Order rows in p by <COLUMN_X>, <COLUMN_Y>, ...
         For each row r in p
             set up window w from <RANGE_BEGIN> to <RANGE_END> around r
-            yield result of <WINDOW_FUNCTION> applied to the window of w of partition p at row r
+            yield result of <WINDOW_FUNCTION> applied to the window w of partition p at row r
 
 Examples of window functions
     ROW_NUMBER() for each row return its position within partition
@@ -26,23 +26,35 @@ Examples of window functions
     LAG()        for each row return either previous row or NULL
     LEAD()       for each row return either next row or NULL
 
-Any aggragte function can be a window function. It just computes its value based on the whole partition
+Any aggregate function can be a window function. It just computes its value based on the whole partition
 and does not take into account the window and the row
 
 Examples
     Select using LAG window function
         SELECT
+            student_info.student_name,
+            student_info.lesson_no,
+            student_info.last_submit_time,
+            LAG(student_info.last_submit_time) OVER (
+                PARTITION BY student_info.student_name 
+                ORDER BY student_info.last_submit_time) AS last_but_one_submit_time 
+        FROM 
+            student_info
+        WHERE 
+            student_info.attempted_lessons_count = 3
+    
+    Select using LAG window function
+        SELECT
             student_name,
-            COUNT(DISTINCT step_id) AS Количество,
-            LAG(COUNT(DISTINCT step_id)) OVER (ORDER BY COUNT(DISTINCT step_id) DESC)
-
+            COUNT(DISTINCT step_student.step_id) AS Count,
+            LAG(COUNT(DISTINCT step_student.step_id)) OVER (ORDER BY COUNT(DISTINCT step_student.step_id) DESC)
         FROM
             student
                 INNER JOIN step_student USING(student_id)
         WHERE
-            result = "correct"
+            step_student.result = "correct"
         GROUP BY
-            student_name;
+            student.student_name;
 
     Select using LAG window function with named window
         WITH
@@ -63,12 +75,12 @@ Examples
                     student_name
         )
         SELECT
-            mod_id AS Модуль,
-            stud AS Студент,
-            rate AS Райтинг,
-            ROW_NUMBER() OVER module_history AS Номер,
-            RANK() OVER module_history AS Ранг,
-            DENSE_RANK() OVER module_history AS Рейтинг
-        ROM
+            mod_id AS Module,
+            stud AS Student,
+            rate AS Rate,
+            ROW_NUMBER() OVER module_history AS Number,
+            RANK() OVER module_history AS Rank,
+            DENSE_RANK() OVER module_history AS Rating
+        FROM
             get_rate_lesson
         WINDOW module_history AS (PARTITION BY mod_id ORDER BY  rate DESC)
