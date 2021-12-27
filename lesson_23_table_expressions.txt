@@ -23,16 +23,16 @@ Table expressions
                         step.step_name
                 )
             SELECT
-                step_correct_answers.step_name AS Шаг,
+                step_correct_answers.step_name AS Step,
                 IF(
                     step_correct_answers.count = 0 AND step_wrong_answers.count = 0,
                     100,
                     ROUND(step_correct_answers.count / (step_correct_answers.count + step_wrong_answers.count) * 100)
-                ) AS Успешность
+                ) AS Success
             FROM
                 step_correct_answers
                     INNER JOIN step_wrong_answers USING(step_name)
             ORDER BY
-                Успешность,
-                Шаг;
+                Success,
+                Step;
 
