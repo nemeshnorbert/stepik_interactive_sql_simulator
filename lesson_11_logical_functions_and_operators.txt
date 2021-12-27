@@ -2,37 +2,37 @@ Logical fucntions and operators
     Function                                  | Description                               | Example
     ---------------------------------------------------------------------------------------------------------------------------------
     IF(condition, value_1, value_2)           | Return value_1 if condition is TRUE,      | IF(amount < 3, price * 1.2, price * 0.9)
-                                                | otherwise return value_2                  |
+                                              | otherwise return value_2                  |
     ---------------------------------------------------------------------------------------------------------------------------------
     GREATEST(value_1, value_2)                | Return value_1 if value_1 >= value_2,     | GREATEST(price, cost)
-                                                | otherwise return value_2                  |
+                                              | otherwise return value_2                  |
     ---------------------------------------------------------------------------------------------------------------------------------
     LEAST(value_1, value_2)                   | Return value_1 if value_1 <= value_2,     | LEAST(price, cost)
-                                                | otherwise return value_2                  |
+                                              | otherwise return value_2                  |
     ---------------------------------------------------------------------------------------------------------------------------------
     condition_1 AND condition_2               | Return true only if both conditions       | amount < 3 AND price > 10
-                                                | are true                                  |
+                                              | are true                                  |
     ---------------------------------------------------------------------------------------------------------------------------------
     condition_1 OR condition_2                | Return false only if both conditions      | amount < 3 OR price > 10
-                                                | are false                                 |
+                                              | are false                                 |
     ---------------------------------------------------------------------------------------------------------------------------------
     NOT condition                             | Return true only if conditions is false   | NOT amount < 3D
     ---------------------------------------------------------------------------------------------------------------------------------
     value BETWEEN lower_bound AND upper_bound | Return true only if lower_bound <= value  | age BETWEEN 18 AND 20
-                                                | and value <= upper_bound                  |
+                                              | and value <= upper_bound                  |
     ---------------------------------------------------------------------------------------------------------------------------------
     value IN sequence                         | Return true only if value is in sequence  | age in (18, 19, 20)
     ---------------------------------------------------------------------------------------------------------------------------------
     value operator ANY values                 | Return true only if expression            | amount  < ANY (2, 1)
-                                                | value operator x                          |
-                                                | returns true for at least one x in values |
+                                              | value operator x                          |
+                                              | returns true for at least one x in values |
     ---------------------------------------------------------------------------------------------------------------------------------
     value operator ALL values                 | Return true only if expression            | amount  < ALL (2, 1)
-                                                | value operator x                          |
-                                                | returns true for all x in values          |
+                                              | value operator x                          |
+                                              | returns true for all x in values          |
     ---------------------------------------------------------------------------------------------------------------------------------
     condition IS x                            | Return true if condition has the same     | flag IS TRUE
-                                                | value is x                                |
+                                              | value is x                                |
     ---------------------------------------------------------------------------------------------------------------------------------
     value IS NULL                             | Return true if value is NULL              | name IS NULL
     ---------------------------------------------------------------------------------------------------------------------------------
