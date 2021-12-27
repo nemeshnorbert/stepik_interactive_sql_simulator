@@ -8,7 +8,7 @@ Table data modifications
             DELETE FROM
                 supply
             WHERE
-                author IN (SELECT author FROM book GROUP BY author HAVING sum(amount) > 10);
+                author = 'Ф. М. Достоевский';
 
         Deletion of some tuples from the table using subqueries
             DELETE FROM
