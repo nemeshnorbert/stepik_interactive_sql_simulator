@@ -2,11 +2,11 @@ Data sorting
     Examples
         Select data with sorting
             SELECT
-                author,
-                title
+                book.author,
+                book.title
             FROM
                 book
             WHERE
-                amount BETWEEN 2 AND 14
+                book.amount BETWEEN 2 AND 14
             ORDER BY
-                author DESC, title;
+                book.author DESC, book.title;
