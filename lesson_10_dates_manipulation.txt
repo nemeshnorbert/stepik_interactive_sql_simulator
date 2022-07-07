@@ -7,9 +7,6 @@ Date manipulation functions
     DATEDIFF(last, first)                   | Returns number of dates such that         | DATEDIFF('2020-05-09','2020-05-01')=8
                                             | first <= date and date < last             |
     -------------------------------------------------------------------------------------------------------------------------------------------
-    DATEDIFF(last, first)                   | Returns number of dates x such that       | DATEDIFF('2020-05-09','2020-05-01') = 8
-                                            | first <= x and x < last                   |
-    -------------------------------------------------------------------------------------------------------------------------------------------
     MONTH(date)                             | Return month of the date                  | MONTH('2020-04-12') = 4
     -------------------------------------------------------------------------------------------------------------------------------------------
     MONTHNAME(date)                         | Return month name of the date             | MONTHNAME('2020-04-12') = 'April'
