@@ -7,3 +7,16 @@ Query syntax
         HAVING (conditions and filtration over groupped data; optional)
         ORDER BY (columns to sort by before giving the final result; optional)
 
+    Order of execution
+        1.  FROM, JOIN
+        2.  WHERE
+        3.  GROUP BY
+        4.  aggregate functions
+        5.  HAVING
+        6.  window functions
+        7.  SELECT
+        8.  DISTINCT
+        9.  UNION/INTERSECT/EXCEPT
+        10. ORDER BY
+        11. OFFSET
+        12. LIMIT/FETCH/TOP
